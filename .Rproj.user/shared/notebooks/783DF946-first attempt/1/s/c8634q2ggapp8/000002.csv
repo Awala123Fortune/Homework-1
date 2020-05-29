@@ -1,0 +1,2 @@
+"0","edx %>% group_by(rating) %>% summarize(count = n()) %>% top_n(5, count) %>%"
+"0","	arrange(desc(count))"

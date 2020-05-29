@@ -1,0 +1,5 @@
+"0","#calculate b_u using the training set "
+"0","user_m <- edx %>%  "
+"0","  left_join(movie_m, by='movieId') %>%"
+"0","  group_by(userId) %>%"
+"0","  summarize(b_u = mean(rating - mu - b_i))"

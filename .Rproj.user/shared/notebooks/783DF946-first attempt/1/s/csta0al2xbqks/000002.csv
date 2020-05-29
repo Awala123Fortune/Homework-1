@@ -1,0 +1,4 @@
+"0","#Edx dataset transformation:usersId and movieId should be treat as factors for some analysis purposes."
+"0","edx.copy <- edx"
+"0","edx.copy$userId <- as.factor(edx.copy$userId)"
+"0","edx.copy$movieId <- as.factor(edx.copy$movieId)"

@@ -1,0 +1,7 @@
+"0","#calculate the RMSE for users"
+"0","rmse_model_2 <- RMSE(validation$rating,predicted_ratings_bu)"
+"0","rmse_model_2"
+"1","[1]"
+"1"," 0.8653488"
+"1","
+"

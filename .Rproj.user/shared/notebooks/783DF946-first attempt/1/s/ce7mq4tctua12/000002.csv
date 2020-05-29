@@ -1,0 +1,4 @@
+"0","#calculate b_i on the training dataset"
+"0","movie_m <- edx %>% "
+"0","  group_by(movieId) %>% "
+"0","  summarize(b_i = mean(rating - mu))"

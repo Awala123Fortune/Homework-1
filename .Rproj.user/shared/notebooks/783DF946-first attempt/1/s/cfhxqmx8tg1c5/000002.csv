@@ -1,0 +1,7 @@
+"0","#For the full model, the optimal  λ  is given as"
+"0","lambda <- lambdas[which.min(rmses)]"
+"0","lambda"
+"1","[1]"
+"1"," 5.25"
+"1","
+"

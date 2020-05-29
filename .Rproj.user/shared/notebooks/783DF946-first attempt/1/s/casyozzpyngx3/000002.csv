@@ -1,0 +1,6 @@
+"0","#predicted ratings"
+"0","predicted_ratings_bu <- validation %>% "
+"0","  left_join(movie_m, by='movieId') %>%"
+"0","  left_join(user_m, by='userId') %>%"
+"0","  mutate(pred = mu + b_i + b_u) %>%"
+"0","  .$pred"

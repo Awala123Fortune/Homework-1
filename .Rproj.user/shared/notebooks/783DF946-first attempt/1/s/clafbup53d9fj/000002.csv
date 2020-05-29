@@ -1,0 +1,7 @@
+"0","#predicted ratings"
+"0","predicted_ratings_bt <- valid %>% "
+"0","  left_join(movie_m, by='movieId') %>%"
+"0","  left_join(user_m, by='userId') %>%"
+"0","  left_join(temp_m, by='date') %>%"
+"0","  mutate(pred = mu + b_i + b_u + b_t) %>%"
+"0","  .$pred"

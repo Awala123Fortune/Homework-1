@@ -1,0 +1,2 @@
+"0","#calculate the average of all ratings of the edx dataset"
+"0","mu <- mean(edx$rating)"

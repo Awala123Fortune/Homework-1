@@ -1,0 +1,7 @@
+"0","#calculate the RMSE for movies"
+"0","rmse_model_1 <- RMSE(validation$rating,predicted_ratings_bi)  "
+"0","rmse_model_1"
+"1","[1]"
+"1"," 0.9439087"
+"1","
+"

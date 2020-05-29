@@ -1,0 +1,10 @@
+"0","dl <- tempfile()"
+"0","download.file(url, dl)"
+"2","trying URL 'https://drive.google.com/drive/folders/1IZcBBX0OmL9wu9AdzMBFUG8GoPbGQ38D?usp=sharing'
+"
+"2","Content type 'text/html; charset=utf-8'"
+"2"," length unknown
+"
+"2","downloaded 186 KB
+
+"

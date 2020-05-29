@@ -1,0 +1,5 @@
+"0","#create a dataframe ""explore_edx_ratings"" which contains half star and whole star ratings  from the edx dataset"
+"0","group <-  ifelse((edx$rating == 1 |edx$rating == 2 | edx$rating == 3 | "
+"0","                  edx$rating == 4 | edx$rating == 5) ,"
+"0","                   ""whole_star"", "
+"0","                   ""half_star"") "

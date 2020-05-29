@@ -1,0 +1,7 @@
+"0","#bar chart of top_title"
+"0","top_title %>% "
+"0","  ggplot(aes(x=reorder(title, count), y=count)) +"
+"0","  geom_bar(stat='identity', fill=""blue"") + coord_flip(y=c(0, 40000)) +"
+"0","  labs(x="""", y=""Number of ratings"") +"
+"0","  geom_text(aes(label= count), hjust=-0.1, size=3) +"
+"0","  labs(title=""Top 20 movies title based \n on number of ratings"" , caption = ""source data: edx set"")"

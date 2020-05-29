@@ -1,0 +1,5 @@
+"0","#create a copy of validation set , valid, and create the date feature which is the timestamp converted to a datetime object  and  rounded by week."
+"0","valid <- validation"
+"0","valid <- valid %>%"
+"0","  mutate(date = round_date(as_datetime(timestamp), unit = ""week"")) "
+"0",""

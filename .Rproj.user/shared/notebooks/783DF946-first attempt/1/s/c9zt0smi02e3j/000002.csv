@@ -1,0 +1,7 @@
+"0","#calculate the RMSE for time effects"
+"0","rmse_model_3 <- RMSE(valid$rating,predicted_ratings_bt)"
+"0","rmse_model_3"
+"1","[1]"
+"1"," 0.8652511"
+"1","
+"

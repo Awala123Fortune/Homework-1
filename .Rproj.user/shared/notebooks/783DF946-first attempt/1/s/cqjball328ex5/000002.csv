@@ -1,0 +1,8 @@
+"0","#get the decomposition of Y ; matrices U, D, and V"
+"0","U_k <- Y$u[, 1:k]"
+"0","dim(U_k)"
+"1","[1]"
+"1"," 69878"
+"1","    55"
+"1","
+"

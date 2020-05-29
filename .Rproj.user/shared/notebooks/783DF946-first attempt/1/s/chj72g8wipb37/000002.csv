@@ -1,0 +1,3 @@
+"0","#POPULAR algorithms of the recommenderlab package"
+"0","model_pop <- Recommender(rate_movies, method = ""POPULAR"", "
+"0","                      param=list(normalize = ""center""))"

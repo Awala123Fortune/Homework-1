@@ -1,0 +1,7 @@
+"0","edx %>%"
+"0","	group_by(rating) %>%"
+"0","	summarize(count = n()) %>%"
+"0","	ggplot(aes(x = rating, y = count)) +"
+"0","	geom_line()+"
+"0","  labs(x=""rating"", y=""number of ratings"", caption = ""source data: edx set"") +"
+"0","  ggtitle(""geomplot : number of ratings per count"")"

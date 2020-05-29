@@ -1,0 +1,10 @@
+"0","set.seed(1, sample.kind = ""Rounding"")"
+"2","non-uniform 'Rounding' sampler used"
+"0","Y <- irlba(sparse_ratings,tol=1e-4,verbose=TRUE,nv = 100, maxit = 1000)"
+"2","Working dimension size 107
+"
+"2","Initializing starting vector v with samples from standard normal distribution.
+Use `set.seed` first for reproducibility.
+"
+"2","irlba: using fast C implementation
+"

@@ -2,12 +2,12 @@
 title: "Movielens project"
 author: "awala fortune o."
 output:
+  html_document:
+    df_print: paged
   pdf_document: 
     fig_caption: yes
     keep_tex: yes
     toc: yes
-  html_document:
-    df_print: paged
 smoth_scroll: no
 collapse: no
 toc: yes
@@ -153,30 +153,7 @@ edx %>%
 The result above shows that the rating was rated highest at point 4 and 5.
 
 Exploration of the features contained in “genres” and “title” of our edx dataset.
-```{r}
-#create a data frame top_genr which contains each single genre without their combinations ( ex : Action and not "Action|Crime|Thriller" , Comedy and not  "Comedy|Romance") . In this way i can visualize which single genre has more ratings
-top_genr <- edx %>% separate_rows(genres, sep = "\\|") %>%
-  group_by(genres) %>%
-  summarize(count = n()) %>%
-  arrange(desc(count))
 
-datatable(top_genr, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) ) %>%
-  formatRound('count',digits=0, interval = 3, mark = ",")
-```
-
-
-```{r}
-# plot a word cloud
-layout(matrix(c(1,2), nrow =2) , heights = c(1,4))
-par(mar=rep(0,4))
-plot.new()
-text(x=0.5,y=0.5, "top Genres by number of ratings")
-wordcloud(words=top_genr$genres,freq=top_genr$count,min.freq=50,
-          max.words = 20,random.order=FALSE,random.color=FALSE,
-          rot.per=0.35,colors = brewer.pal(8,"Dark2"),scale=c(5,.2),
-          family="plain",font=2,
-          main = "Top genres by number of ratings")
-```
 
 
 ```{r}
@@ -658,7 +635,7 @@ rmses <- sapply(lambdas, function(l){
 qplot(lambdas, rmses)  
 ```
 
-#For the full model, the optimal  λ#
+#For the full model, the optimal lambda λ#
 ```{r}
 #For the full model, the optimal  λ  is given as
 lambda <- lambdas[which.min(rmses)]
@@ -676,8 +653,6 @@ rmse_model_4
 #summarize all the rmse on validation set for Linear regression models
 rmse_results <- data.frame(methods=c("movie effect","movie + user effects","movie + user + time effects", "Regularized Movie + User Effect Model"),rmse = c(rmse_model_1, rmse_model_2,rmse_model_3, rmse_model_4))
 
-```
-```{r}
 kable(rmse_results) %>%
   kable_styling(bootstrap_options = "striped" , full_width = F , position = "center") %>%
   kable_styling(bootstrap_options = "bordered", full_width = F , position ="center") %>%
@@ -744,8 +719,6 @@ rmse_ibcf
 ```{r}
 rmse_crossvalidation <- data.frame(methods=c("Popularity-Based model","User-based Model"," Item-Based Model"),rmse = c(rmse_pop,rmse_ubcf ,rmse_ibcf))
 
-```
-```{r}
 kable(rmse_crossvalidation) %>%
   kable_styling(bootstrap_options = "striped" , full_width = F , position = "center") %>%
   kable_styling(bootstrap_options = "bordered", full_width = F , position ="center") %>%
@@ -758,178 +731,18 @@ plot(rmse_crossvalidation, annotate = 1, legend = "topleft")
 title("ROC curve, Three Models")
 ```
 
-Root mean square error (RMSE) the standard deviation of the difference between the real and predicted ratings, the higher the error, the worse the model performs.
-##Matrix Factorization Method with parallel stochastic gradient descent##
-```{r}
-#Before to perform MF method, i clear unusued memory
-invisible(gc())
-```
-```{r}
-#create a copy of training(edx) and validation sets which retains only userId, movieId and rating features, renaming the three columns.
-
-edx.copy <-  edx %>%
-            select(-c("genres","title","timestamp"))
-
-names(edx.copy) <- c("user", "item", "rating")
-
-
-valid.copy <-  validation %>%
-  select(-c("genres","title","timestamp"))
-
-names(valid.copy) <- c("user", "item", "rating")
-
-
-#as matrix
-edx.copy <- as.matrix(edx.copy)
-valid.copy <- as.matrix(valid.copy)
-
-```
-```{r}
-#write edx.copy and valid.copy tables on disk 
-write.table(edx.copy , file = "trainset.txt" , sep = " " , row.names = FALSE, col.names = FALSE)
-write.table(valid.copy, file = "validset.txt" , sep = " " , row.names = FALSE, col.names = FALSE)
-```
-```{r}
-#  data_file(): Specifies a data set from a file in the hard disk. 
-
-set.seed(123) # This is a randomized algorithm
-train_set <- data_file(system.file( "dat" ,"trainset.txt" , package = "recosystem"))
-valid_set <- data_file(system.file( "dat" ,"validset.txt" , package = "recosystem"))
-```
-```{r}
-#Next step is to build Recommender object
-r = Reco()
-```
-```{r}
-# Matrix Factorization :  tuning training set
-
-opts = r$tune(train_set, opts = list(dim = c(10, 20, 30), lrate = c(0.1, 0.2),
-                                     costp_l1 = 0, costq_l1 = 0,
-                                     nthread = 1, niter = 10))
-opts
-```
-```{r}
-# Matrix Factorization : trains the recommender model
-
-r$train(train_set, opts = c(opts$min, nthread = 1, niter = 20))
-```
-##Increasing model performance##
-Based on the different RMSE’s values, Linear regression model with Regularized movie + user effect and Matrix factorization with stochastic gradient, best predict ratings on the validation dataset.
-
-```{r}
-#create a copy of training(edx) and validation sets which retain only userId, movieId and rating features. Renaming the three columns.
-
-edx.copy <-  edx %>%
-            select(-c("genres","title","timestamp"))
-
-names(edx.copy) <- c("user", "item", "rating")
-
-
-valid.copy <-  validation %>%
-  select(-c("genres","title","timestamp"))
-
-names(valid.copy) <- c("user", "item", "rating")
-
-```
-```{r}
-#as matrix
-edx.copy <- as.matrix(edx.copy)
-valid.copy <- as.matrix(valid.copy)
-```
-```{r}
-#write edx.copy and valid.copy tables on disk 
-write.table(edx.copy , file = "trainset.txt" , sep = " " , row.names = FALSE, col.names = FALSE)
-write.table(valid.copy, file = "validset.txt" , sep = " " , row.names = FALSE, col.names = FALSE)
-```
-```{r}
-#data_file(): Specifies a data set from a file in the hard disk. 
-
-set.seed(123) # This is a randomized algorithm
-train_set <- data_file(system.file( "dat" ,"trainset.txt" , package = "recosystem"))
-valid_set <- data_file(system.file( "dat" ,"validset.txt" , package = "recosystem"))
-```
-```{r}
-#Next step is to build Recommender object
-r = Reco()
-```
-```{r}
-#Optimizing/tuning the recommender model
-opts <- r$tune(train_set , opts = list(dim = c(1:20), lrate = c(0.05),
-                                            nthread = 4 , costp_l1=0, 
-                                            costq_l1 = 0,
-                                            niter = 50, nfold = 10,
-                                            verbose = FALSE))
-```
-```{r}
-#trains the recommender model
-r$train(train_set, opts = c(opts$min , nthread = 4, niter = 100,verbose=FALSE))
-
-```
-```{r}
-#Making prediction on validation set and calculating RMSE:
-pred_file = tempfile()
-
-r$predict(valid_set, out_file(pred_file))  
-```
-
-```{r}
-#Matrix Factorization : show first 10 predicted values
-print(scan(pred_file, n = 10))
-```
-
-```{r}
-#valid_set
-scores_real <- read.table("validset.txt", header = FALSE, sep = " ")$V3
-scores_pred <- scan(pred_file)
-```
-```{r}
-# remove edx.copy and valid.copy objects
-rm(edx.copy, valid.copy)
-```
-```{r}
-rmse_mf_opt <- RMSE(scores_real,scores_pred)
-
-rmse_mf_opt
-```
-
-```{r}
-iter.line <- 15
-tr_rmse.line <- mat.facto_rmse$tr_rmse[which(mat.facto_rmse$iter==15)]
-
-
-mat.facto_rmse %>% 
-  ggplot(aes(x=iter, y = tr_rmse))+
-  geom_point(size= 5 , shape = 19 ) + 
-  geom_smooth(aes(x= iter, y = tr_rmse)) +
-  geom_segment(x=0,xend=iter.line ,y=tr_rmse.line,yend=tr_rmse.line, color="red", lty=2)+
-  geom_segment(x=iter.line, xend=iter.line, y=0, yend=tr_rmse.line, color="red", lty=2) +
-  annotate(geom="label",x = iter.line,y = 0.8350,color=2,     
-           label=paste("x=",round(iter.line,0),"\ny=",round(tr_rmse.line ,4)))+
-  labs(title="RMSE for different number of latent factors" ,
-       caption = "based on the output of r$train(train_set, opts = c(opts$min, nthread = 4, niter = 100), \n show just first 30 iterations)"
-  ) +
-  ylab("RMSE") +
-  xlab("Latent factors")
-```
-
-The focus is to optimize the performance of matrix factorization with stochastic gradient using 10 fold cross validation ( nfolds = 10). This consisted to understand the behavior of the rmse value for the Matrix Factorization recommender engine when modifying values of number of latent factors (dim), gradient descend step rate (lrate), penalty parameters to avoid overfitting (cost) and number of threads for parallel computing (nthread). The figure above shows the number of latent factors vs. cross-validation RMSE . It is observed that the training model just needed 15 latent factors to reach a rmse value lower than 0.8. To sum up, we observed that even with these optimal criteria, the RMSE value for the Matrix factorization method is still below 0.8.(see value of rmse_mf_opt)
+Root mean square error (RMSE) the standard deviation of the difference between the real and predicted ratings, the higher the error, the worse the model performs.From the result, of the cross validation model, the item based model is the worst and should not be reccommended, the popularity based model worked better with an rmse of 0.8482917. The best model recommended from this research from the validation set is the regularized Movie + User effect Model with the least root mean square of 0.8648170. 
 
 ###Conclusion###
-This MovieLens project has examined the potential best recommender system algorithm to predict movie ratings for the 10M version of the Movielens data. Using the provided training set (edx) and validation set, we successively trained different linear regression models and some recommender engines. The model evaluation performance through the RMSE ( root mean squared error) showed that the Linear regression model with regularized effects on users and movies, and the Matrix Factorization with Stochastic gradient descent are the two appropriate recommender systems to predict ratings on the validation set. Using 10 fold cross-validation to increase the performance of the Matrix Factorization method , in line with the understanding the behavior of the rmse value with changing optimal criteria( dim, nthread, lrate, lim), it is natable to present an rmse value that is less than 0.8.
+This MovieLens project has examined the potential best recommender system algorithm to predict movie ratings for the 10M version of the Movielens data. Using the provided training set (edx) and validation set, we successively trained different linear regression models and some recommender engines. The model evaluation performance through the RMSE ( root mean squared error) showed that the Linear regression model with regularized effects on users and movie is an appropriate recommender systems to predict ratings on the validation set. 
 ###Recommendations###
-The research strongly reccommend the following for further investigations using other models, such as essemble which was not possible due to hardware issues.  
-
-
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+The research strongly reccommend the following for further investigations using other models, such as essemble,and matrix factorization to get the latent root mean square error which was not possible due to hardware issues.
 
 ```{r}
-plot(cars)
+print("Operating System:")
+
+version
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

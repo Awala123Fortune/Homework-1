@@ -1,0 +1,6 @@
+"0","#Using the same approach, compute similarity between  movies."
+"0",""
+"0","similarity_movies <- similarity(rate_Mat[,1:50], "
+"0","                               method = ""cosine"", "
+"0","                               which = ""items"")"
+"0",""

@@ -1,0 +1,5 @@
+"0","#calculate the user similarity using the cosine similarity"
+"0","similarity_users <- similarity(rate_Mat[1:50,], "
+"0","                               method = ""cosine"", "
+"0","                               which = ""users"")"
+"0",""

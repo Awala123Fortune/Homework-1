@@ -1,0 +1,2 @@
+"0","## remembering that lambda is a tuning parameter. We can use cross-validation to choose it"
+"0","lambdas <- seq(0, 10, 0.25)"

@@ -1,0 +1,3 @@
+"0","# plot singular values"
+"0","plot(Y$d, pch=20, col = ""blue"", cex = 1.5, xlab='Singular Value', ylab='Magnitude', "
+"0","     main = ""User-Movie Matrix"")"

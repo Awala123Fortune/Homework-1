@@ -1,0 +1,4 @@
+"0","# predicted ratings"
+"0","predicted_ratings_bi <- mu + validation %>% "
+"0","  left_join(movie_m, by='movieId') %>%"
+"0","  .$b_i"

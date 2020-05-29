@@ -1,0 +1,6 @@
+"0","perc_vec <- NULL"
+"0","for (i in 1:length(Y$d)) {"
+"0","  perc_vec[i] <- sum(Y$d[1:i]^2) / all_sing_val"
+"0","}"
+"0",""
+"0","plot(perc_vec, pch=20, col = ""blue"", cex = 1.5, xlab='Singular Value', ylab='% Sum of Squares of Singular Values', main = ""k for Dimensionality Reduction"")"

@@ -1,0 +1,7 @@
+"0","# variability described by first 6, 12, and 20 singular values"
+"0","first_six <- sum(Y$d[1:6]^2)"
+"0","print(first_six/all_sing_val)"
+"1","[1]"
+"1"," 0.6187623"
+"1","
+"

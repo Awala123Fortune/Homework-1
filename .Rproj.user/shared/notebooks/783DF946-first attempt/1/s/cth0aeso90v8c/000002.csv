@@ -1,0 +1,2 @@
+"0","# calculate sum of squares of all singular values"
+"0","all_sing_val <- sum(Y$d^2)"
