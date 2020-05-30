@@ -1,6 +1,6 @@
 ---
 title: "Movielens project"
-author: "awala fortune o."
+author: "Awala fortune o."
 output:
   html_document:
     df_print: paged
